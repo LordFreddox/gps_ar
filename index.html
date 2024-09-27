@@ -1,51 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-</head>
-<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-<script src="https://threejs.org/build/three.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
-<body style="margin: 0; overflow: hidden;">
-    <a-scene
-      vr-mode-ui="false"
-      renderer="logarithmicDepthBuffer: true;"
-      embedded
-      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
-      gps-camera="simulateAltitude: false; minDistance: 0; gpsMinAccuracy: 100;"
-    >
-      <!-- Configura el cubo 3D con coordenadas GPS -->
-      <a-box
-        color="yellow"
-        depth="1"
-        height="1"
-        width="1"
-        gps-entity-place="latitude: 40.730610; longitude: -73.935242;"
-      ></a-box>
-  
-      <!-- Cámara con el sistema GPS activado -->
-      <a-entity camera gps-camera rotation-reader></a-entity>
-    </a-scene>
-  <script>
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-      
-          // Crear dinámicamente el objeto en la posición del usuario
-          const box = document.createElement("a-box");
-          box.setAttribute("gps-entity-place", `latitude: ${lat}; longitude: ${lon}`);
-          box.setAttribute("color", "red");
-          box.setAttribute("depth", "1");
-          box.setAttribute("height", "1");
-          box.setAttribute("width", "1");
-      
-          document.querySelector("a-scene").appendChild(box);
-        });
-      }
-      
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Location-based AR.js demo</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+  </head>
 
-  </script>
-</body>
+  <body style="margin: 0; overflow: hidden;">
+    <a-scene
+      vr-mode-ui="enabled: false"
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false;"
+    >
+      <a-text
+        value="This content will always face you."
+        look-at="[gps-camera]"
+        scale="50 50 50"
+        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
+      ></a-text>
+      <a-camera gps-camera rotation-reader> </a-camera>
+    </a-scene>
+  </body>
+</html>
