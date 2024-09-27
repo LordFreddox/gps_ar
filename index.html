@@ -4,28 +4,48 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 </head>
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 <script src="https://threejs.org/build/three.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
-<body>
-  <a-scene vr-mode-ui="false" embedded arjs>
-    <a-marker preset="hiro">
-      <a-box position="0 0.5 0" material="color: yellow;"></a-box>
-    </a-marker>
-    <a-entity camera></a-entity>
-  </a-scene>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene
+      vr-mode-ui="false"
+      renderer="logarithmicDepthBuffer: true;"
+      embedded
+      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+      gps-camera="simulateAltitude: false; minDistance: 0; gpsMinAccuracy: 100;"
+    >
+      <!-- Configura el cubo 3D con coordenadas GPS -->
+      <a-box
+        color="yellow"
+        depth="1"
+        height="1"
+        width="1"
+        gps-entity-place="latitude: 40.730610; longitude: -73.935242;"
+      ></a-box>
+  
+      <!-- Cámara con el sistema GPS activado -->
+      <a-entity camera gps-camera rotation-reader></a-entity>
+    </a-scene>
   <script>
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          let lat = position.coords.latitude;
-          let lon = position.coords.longitude;
-          console.log("Latitud: " + lat + " Longitud: " + lon);
-          // Usa lat y lon para posicionar objetos en el espacio
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+      
+          // Crear dinámicamente el objeto en la posición del usuario
+          const box = document.createElement("a-box");
+          box.setAttribute("gps-entity-place", `latitude: ${lat}; longitude: ${lon}`);
+          box.setAttribute("color", "red");
+          box.setAttribute("depth", "1");
+          box.setAttribute("height", "1");
+          box.setAttribute("width", "1");
+      
+          document.querySelector("a-scene").appendChild(box);
         });
       }
-      let object = new THREE.BoxGeometry(1, 1, 1);
-      let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-      let cube = new THREE.Mesh(object, material);
-      scene.add(cube);
-      cube.position.set(lat * factor, 0, lon * factor);      
+      
+
   </script>
 </body>
