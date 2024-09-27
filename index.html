@@ -3,21 +3,29 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>GeoAR.js demo</title>
-    <script src='https://aframe.io/releases/0.9.2/aframe.min.js'></script>
-    <script src="https://raw.githack.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
-    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-    <script>
-        THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
-    </script>
 </head>
-
-<body style='margin: 0; overflow: hidden;'>
-    <a-scene
-        vr-mode-ui="enabled: false"
-		embedded
-        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
-        
-        <a-camera gps-camera rotation-reader></a-camera>
-	</a-scene>
+<script src="https://threejs.org/build/three.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
+<body>
+  <a-scene vr-mode-ui="false" embedded arjs>
+    <a-marker preset="hiro">
+      <a-box position="0 0.5 0" material="color: yellow;"></a-box>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+  <script>
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
+          console.log("Latitud: " + lat + " Longitud: " + lon);
+          // Usa lat y lon para posicionar objetos en el espacio
+        });
+      }
+      let object = new THREE.BoxGeometry(1, 1, 1);
+      let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      let cube = new THREE.Mesh(object, material);
+      scene.add(cube);
+      cube.position.set(lat * factor, 0, lon * factor);      
+  </script>
 </body>
