@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Location-based AR.js demo</title>
+    <title>AR.js with Offset</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
@@ -15,18 +15,46 @@
       embedded
       arjs="sourceType: webcam; debugUIEnabled: false;"
     >
-      <!-- Cambié a a-box para mostrar un cubo -->
-      <a-box
-        color="blue"
-        depth="1"
-        height="1"
-        width="1"
-        look-at="[gps-camera]"
-        scale="10 10 10"
-        gps-entity-place="latitude: 4.60423367964502; longitude: -74.21776940456301;"
-      ></a-box>
+      <!-- Cubo a generar dinámicamente -->
       
       <a-camera gps-camera rotation-reader> </a-camera>
     </a-scene>
+
+    <script>
+      // Función para convertir metros a grados de latitud y longitud
+      function metersToLatitude(meters) {
+        return meters / 111320; // 1 grado de latitud en metros
+      }
+
+      function metersToLongitude(meters, latitude) {
+        return meters / (111320 * Math.cos(latitude * (Math.PI / 180))); // Ajuste por la latitud
+      }
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const userLat = position.coords.latitude;
+          const userLon = position.coords.longitude;
+
+          // Offset de 10 metros en dirección norte y este
+          const offsetMeters = 10;
+          const newLat = userLat + metersToLatitude(offsetMeters); // Offset en latitud
+          const newLon = userLon + metersToLongitude(offsetMeters, userLat); // Offset en longitud
+
+          // Crear el cubo en las coordenadas desplazadas
+          const box = document.createElement("a-box");
+          box.setAttribute("color", "blue");
+          box.setAttribute("depth", "1");
+          box.setAttribute("height", "1");
+          box.setAttribute("width", "1");
+          box.setAttribute("scale", "10 10 10");
+          box.setAttribute("look-at", "[gps-camera]");
+          box.setAttribute("gps-entity-place", `latitude: ${newLat}; longitude: ${newLon};`);
+
+          document.querySelector("a-scene").appendChild(box);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    </script>
   </body>
 </html>
