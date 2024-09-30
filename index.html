@@ -20,6 +20,37 @@
     </style>
   </head>
   <body>
+    <script>
+      // Solicitar permiso para orientación en iOS y otros dispositivos.
+      function requestOrientationPermission() {
+        if (
+          typeof DeviceOrientationEvent !== 'undefined' &&
+          typeof DeviceOrientationEvent.requestPermission === 'function'
+        ) {
+          // iOS 13+ requiere permiso explícito del usuario para el acceso a orientación del dispositivo.
+          DeviceOrientationEvent.requestPermission()
+            .then((response) => {
+              if (response === 'granted') {
+                window.addEventListener('deviceorientation', (event) => {
+                  console.log('Device orientation granted');
+                });
+              } else {
+                console.log('Permission denied');
+              }
+            })
+            .catch(console.error);
+        } else {
+          // Otros navegadores o dispositivos (como Android) pueden no necesitar permiso.
+          window.addEventListener('deviceorientation', (event) => {
+            console.log('Device orientation supported without permission');
+          });
+        }
+      }
+    
+      // Llama a la función al cargar la página o después de una interacción.
+      window.addEventListener('click', requestOrientationPermission);
+    </script>
+    
     <a-scene vr-mode-ui="enabled: false">
       <!-- Cámara GPS -->
       <a-entity gps-new-camera="gpsMinAccuracy: 100" look-controls></a-entity>
