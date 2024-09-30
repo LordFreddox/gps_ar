@@ -23,7 +23,7 @@
     <a-scene vr-mode-ui="enabled: false">
       <!-- Cámara GPS -->
       <a-entity gps-new-camera="gpsMinAccuracy: 100" look-controls></a-entity>
-
+      <a-entity device-orientation-permission-ui></a-entity>
       <!-- Texto para mostrar la posición -->
       <a-text
         id="gps-coordinates"
@@ -38,5 +38,38 @@
 
     <!-- Enlazar el script externo -->
     <script src="main.js"></script>
+    <script>
+      // Solicitar permisos de orientación en iOS (opcional)
+      if (
+        typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function'
+      ) {
+        DeviceOrientationEvent.requestPermission()
+          .then((response) => {
+            if (response === 'granted') {
+              console.log("Device orientation permission granted.");
+            }
+          })
+          .catch(console.error);
+      }
+
+      // Actualizar las coordenadas GPS en pantalla
+      document.querySelector("a-scene").addEventListener("gps-entity-place-update-positon", (event) => {
+        const gpsInfo = document.getElementById("gps-info");
+        const coordinates = event.detail.position;
+        const accuracy = event.detail.accuracy;
+
+        if (coordinates) {
+          gpsInfo.innerHTML = `GPS Position: <br> Lat: ${coordinates.latitude} <br> Lng: ${coordinates.longitude} <br> Accuracy: ${accuracy}m`;
+
+          // Mostrar las coordenadas en A-Frame
+          const gpsText = document.getElementById("gps-coordinates");
+          gpsText.setAttribute(
+            "value",
+            `Lat: ${coordinates.latitude}\nLng: ${coordinates.longitude}\nAccuracy: ${accuracy}m`
+          );
+        }
+      });
+    </script>
   </body>
 </html>
