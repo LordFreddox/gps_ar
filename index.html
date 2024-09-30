@@ -17,13 +17,35 @@
         color: white;
         font-size: 18px;
       }
+
+      #permission-request {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        z-index: 1000;
+      }
+
+      #permission-request button {
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <a-scene vr-mode-ui="enabled: false">
-      <!-- Cámara GPS -->
+      <!-- Cámara GPS con controles de orientación -->
       <a-entity gps-new-camera="gpsMinAccuracy: 100" look-controls></a-entity>
       <a-entity device-orientation-permission-ui></a-entity>
+
       <!-- Texto para mostrar la posición -->
       <a-text
         id="gps-coordinates"
@@ -36,22 +58,44 @@
     <!-- Información en pantalla sobre las coordenadas -->
     <div id="gps-info">GPS Position: Waiting...</div>
 
-    <!-- Enlazar el script externo -->
-    <script src="main.js"></script>
+    <!-- Solicitud de permiso de interacción -->
+    <div id="permission-request">
+      <div>
+        <p>Por favor, toca el botón para habilitar los controles de orientación.</p>
+        <button id="enable-orientation">Habilitar Orientación</button>
+      </div>
+    </div>
+
     <script>
-      // Solicitar permisos de orientación en iOS (opcional)
-      if (
-        typeof DeviceOrientationEvent !== 'undefined' &&
-        typeof DeviceOrientationEvent.requestPermission === 'function'
-      ) {
-        DeviceOrientationEvent.requestPermission()
-          .then((response) => {
-            if (response === 'granted') {
-              console.log("Device orientation permission granted.");
-            }
-          })
-          .catch(console.error);
+      // Solicitar permisos para orientación de dispositivo
+      function requestOrientationPermission() {
+        if (
+          typeof DeviceOrientationEvent !== 'undefined' &&
+          typeof DeviceOrientationEvent.requestPermission === 'function'
+        ) {
+          DeviceOrientationEvent.requestPermission()
+            .then((response) => {
+              if (response === 'granted') {
+                console.log("Device orientation permission granted.");
+                document.getElementById("permission-request").style.display = "none";
+              } else {
+                console.log("Permission denied");
+              }
+            })
+            .catch(console.error);
+        } else {
+          // Para otros navegadores, habilitar orientación automáticamente
+          window.addEventListener('deviceorientation', (event) => {
+            console.log('Device orientation supported without permission');
+          });
+          document.getElementById("permission-request").style.display = "none";
+        }
       }
+
+      // Mostrar una ventana emergente pidiendo interacción del usuario
+      document.getElementById('enable-orientation').addEventListener('click', function () {
+        requestOrientationPermission();
+      });
 
       // Actualizar las coordenadas GPS en pantalla
       document.querySelector("a-scene").addEventListener("gps-entity-place-update-positon", (event) => {
