@@ -9,6 +9,22 @@
   </head>
   <body>
     <script>
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log("Latitude: " + position.coords.latitude);
+            console.log("Longitude: " + position.coords.longitude);
+            console.log("Accuracy: " + position.coords.accuracy);
+          },
+          (error) => {
+            console.error("Error getting GPS position: ", error);
+          },
+          { enableHighAccuracy: true }
+        );
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+      
       AFRAME.registerComponent('locationfinder',{
         init:function(){
           navigator.geolocation.getCurrentPosition(function(location){
