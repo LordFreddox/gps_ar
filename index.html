@@ -20,37 +20,6 @@
     </style>
   </head>
   <body>
-    <script>
-      // Solicitar permiso para orientación en iOS y otros dispositivos.
-      function requestOrientationPermission() {
-        if (
-          typeof DeviceOrientationEvent !== 'undefined' &&
-          typeof DeviceOrientationEvent.requestPermission === 'function'
-        ) {
-          // iOS 13+ requiere permiso explícito del usuario para el acceso a orientación del dispositivo.
-          DeviceOrientationEvent.requestPermission()
-            .then((response) => {
-              if (response === 'granted') {
-                window.addEventListener('deviceorientation', (event) => {
-                  console.log('Device orientation granted');
-                });
-              } else {
-                console.log('Permission denied');
-              }
-            })
-            .catch(console.error);
-        } else {
-          // Otros navegadores o dispositivos (como Android) pueden no necesitar permiso.
-          window.addEventListener('deviceorientation', (event) => {
-            console.log('Device orientation supported without permission');
-          });
-        }
-      }
-    
-      // Llama a la función al cargar la página o después de una interacción.
-      window.addEventListener('click', requestOrientationPermission);
-    </script>
-    
     <a-scene vr-mode-ui="enabled: false">
       <!-- Cámara GPS -->
       <a-entity gps-new-camera="gpsMinAccuracy: 100" look-controls></a-entity>
@@ -67,32 +36,7 @@
     <!-- Información en pantalla sobre las coordenadas -->
     <div id="gps-info">GPS Position: Waiting...</div>
 
-    <script>
-      // Función para actualizar el texto con las coordenadas
-      document.querySelector("a-scene").addEventListener("gps-entity-place-update-positon", (event) => {
-        const gpsInfo = document.getElementById("gps-info");
-        const coordinates = event.detail.position;
-        const accuracy = event.detail.accuracy;
-
-        if (coordinates) {
-          gpsInfo.innerHTML = `GPS Position: <br> Lat: ${coordinates.latitude} <br> Lng: ${coordinates.longitude} <br> Accuracy: ${accuracy}m`;
-
-          // Opcional: Mostrar en la escena de A-Frame también
-          const gpsText = document.getElementById("gps-coordinates");
-          gpsText.setAttribute(
-            "value",
-            `Lat: ${coordinates.latitude}\nLng: ${coordinates.longitude}\nAccuracy: ${accuracy}m`
-          );
-        }
-      });
-
-      // Listener para manejar errores o cuando no se tiene GPS
-      document
-        .querySelector("a-scene")
-        .addEventListener("gps-camera-error", (error) => {
-          const gpsInfo = document.getElementById("gps-info");
-          gpsInfo.innerHTML = "Error: Unable to retrieve GPS position";
-        });
-    </script>
+    <!-- Enlazar el script externo -->
+    <script src="main.js"></script>
   </body>
 </html>
