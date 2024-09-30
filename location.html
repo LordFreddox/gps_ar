@@ -12,7 +12,7 @@
       AFRAME.registerComponent('locationfinder',{
         init:function(){
           navigator.geolocation.getCurrentPosition(function(location){
-            console.log(location);
+            console.log("la ubicación del dispositivo es: "+location);
         });
        }
       })
