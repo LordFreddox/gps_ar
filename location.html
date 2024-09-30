@@ -10,31 +10,45 @@
   <body>
     <script>
       if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
+        navigator.geolocation.watchPosition(
           (position) => {
-            console.log("Latitude: " + position.coords.latitude);
-            console.log("Longitude: " + position.coords.longitude);
-            console.log("Accuracy: " + position.coords.accuracy);
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+    
+            // Muestra la posición en la consola
+            console.log("Latitude: " + latitude);
+            console.log("Longitude: " + longitude);
+            console.log("Accuracy: " + accuracy);
+    
+            // Actualiza la posición de la cámara GPS
+            const camera = document.getElementById("gps-camera");
+            camera.setAttribute("gps-new-camera", {
+              latitude: latitude,
+              longitude: longitude,
+              accuracy: accuracy // Opcional: para mostrar precisión
+            });
           },
           (error) => {
             console.error("Error getting GPS position: ", error);
           },
-          { enableHighAccuracy: true }
+          { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
         );
       } else {
         console.log("Geolocation is not supported by this browser.");
       }
       
-      AFRAME.registerComponent('locationfinder',{
+      /*AFRAME.registerComponent('locationfinder',{
         init:function(){
           navigator.geolocation.getCurrentPosition(function(location){
             console.log("la ubicación del dispositivo es: "+location);
         });
        }
-      })
+      })*/
     </script>
     <a-scene embedded arjs="source:webcam">
       <!--<a-camera gps-camera="simulateLatitude:4.604731;simulateLongitude:-74.218073" rotation-reader></a-camera> -->
+      <a-entity id="gps-camera" gps-new-camera look-controls></a-entity>
       <a-camera rotation-reader></a-camera>
       <a-text 
               value="Norte" 
