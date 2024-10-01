@@ -47,9 +47,18 @@ function createModel3D(prize) {
   var randomlongitude = randomNumber(-0.0001, 0.0001);
   model.setAttribute('scale','5 5 5');
   model.setAttribute('rotation','0 0 0');
-  model.setAttribute('gltf-model', prize.url3d);
+  //model.setAttribute('gltf-model', prize.url3d);
+  model.setAttribute('gltf-model', 'https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/ClubColombia.glb');
   model.setAttribute('gps-entity-place', 'longitude:' + (prize.coords.longitude + randomlongitude) + '; latitude: ' + (prize.coords.latitude + randomLatitude) + ';');
   model.setAttribute('animation-mixer', '');
+  modelEntity.addEventListener('model-loaded', function () {
+    console.log('Modelo cargado correctamente.');
+  });
+
+  // Añadir un listener para capturar errores en la carga del modelo
+  modelEntity.addEventListener('model-error', function (event) {
+    console.error('Error al cargar el modelo:', event.detail.src);
+  });
   const clickListener = function (ev) {
     ev.stopPropagation();
     ev.preventDefault();

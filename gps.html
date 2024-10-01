@@ -39,7 +39,7 @@
 </head>
 <body style="margin: 0; overflow: hidden;">
     <a-scene gps_at_position_start cursor='rayOrigin: mouse; fuse: true; fuseTimeout: 0;' vr-mode-ui="enabled: false" embedded arjs='debugUIEnabled: false;' renderer="logarithmicDepthBuffer: true;">
-        <a-camera gps-camera rotation-reader></a-camera>
+        <a-camera gps-camera rotation-reader camera="far: 10000"></a-camera>
 	</a-scene>
     <div class="contenedor">
         <div style="position:absolute;left: 3%;top: 3%;color: #00a4e3;">Estás en:</div>
