@@ -27,7 +27,7 @@
     <a-entity gltf-model="#club"  
     look-at="[gps-camera]"
     scale="50 50 50"
-    gps-entity-place="latitude: 4.738360202804273; longitude: -74.05125975215503;"
+    gps-entity-place="latitude: 4.604843520348439; longitude: -74.21816022551855;"
     maxDistance="500"></a-entity>
     <a-entity gltf-model="#magne"  
     look-at="[gps-camera]"
@@ -58,7 +58,7 @@
         scale="120 120 120"
         gps-entity-place="latitude: 4.604329312463513; longitude: -74.2178109716741;"
       ></a-text>
-      <a-camera gps-camera rotation-reader far="500"> </a-camera>
+      <a-camera gps-camera rotation-reader far="200"> </a-camera>
     </a-scene>
     <script>
       document.querySelector("[gps-camera]").addEventListener("gps-camera-update-position", (e) => {
