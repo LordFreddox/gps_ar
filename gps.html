@@ -7,13 +7,17 @@
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <script src="https://unpkg.com/aframe-gps-camera@latest/dist/aframe-gps-camera.min.js"></script>
+
   </head>
 
   <body>
-    <a-scene
-      vr-mode-ui="enabled: false"
-      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
-    >
+    <script>
+      function randomNumber(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    </script>
+    <a-scene>
     <a-assets>
       <a-asset-item id="club" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/ClubColombia.glb"></a-asset-item>
       <a-asset-item id="magne" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/magnemite.glb"></a-asset-item>
@@ -24,36 +28,74 @@
     
     <a-entity gltf-model="#club"  
     look-at="[gps-camera]"
-    scale="50 50 50"
-    gps-entity-place="latitude: 4.606117134138066; longitude: -74.22236535581726;"></a-entity>
+    scale="10 10 10"
+    maxDistance="500"></a-entity>
     <a-entity gltf-model="#magne"  
     look-at="[gps-camera]"
-    scale="120 120 120"
-    gps-entity-place="latitude: 4.605457926494811; longitude: -74.22206954075408;"></a-entity>
+    scale="10 10 10"
+    gps-entity-place="latitude: 4.605457926494811; longitude: -74.22206954075408;"
+    maxDistance="10"></a-entity>
 
-    <a-entity gltf-model="#pizza"  
+    <!--<a-entity gltf-model="#pizza"  
     look-at="[gps-camera]"
-    scale="120 120 120"
+    scale="10 10 10"
     gps-entity-place="latitude: 4.610198106757793; longitude: -74.22181377004273;"></a-entity>
     <a-entity gltf-model="#plato"  
     look-at="[gps-camera]"
-    scale="50 50 50"
-    gps-entity-place="latitude: 4.609299531887598; longitude: -74.22163970200745;"></a-entity>
+    scale="10 10 10"
+    gps-entity-place="latitude: 4.609299531887598; longitude: -74.22163970200745;"
+    maxDistance="10"></a-entity>
 
 
     <a-entity gltf-model="#balon"  
     look-at="[gps-camera]"
-    scale="120 120 120"
-    gps-entity-place="latitude: 4.587147838437966; longitude: -74.20594719724042;"></a-entity>
+    scale="10 10 10"
+    gps-entity-place="latitude: 4.587147838437966; longitude: -74.20594719724042;"
+    maxDistance="100"></a-entity>!-->
 
       <a-text
         value="This content will always face you."
         look-at="[gps-camera]"
-        scale="120 120 120"
-        gps-entity-place="latitude: 4.5950123; longitude: -74.2120629;"
+        scale="10 10 10"
+        gps-entity-place="latitude: 4.604329312463513; longitude: -74.2178109716741;"
       ></a-text>
-      <a-camera gps-camera rotation-reader> </a-camera>
+      <a-camera gps-camera rotation-reader far="200"> </a-camera>
     </a-scene>
+    <script>
+      document.querySelector("[gps-camera]").addEventListener("gps-camera-update-position", (e) => {
+        console.log("Position updated:", e.detail.position);
+      });
+      function randomNumber(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    
+window.addEventListener('load', () => {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition((position) => {
+        const userLatitude = position.coords.latitude;
+        const userLongitude = position.coords.longitude;
+
+        // Genera una posición aleatoria alrededor del usuario
+        const randomLatitude = userLatitude + randomNumber(-0.001, 0.001); // +- 0.001 grados (~111m)
+        const randomLongitude = userLongitude + randomNumber(-0.001, 0.001); // +- 0.001 grados (~111m)
+
+        // Seleccionar el objeto y asignar la nueva posición aleatoria
+        const club = document.querySelector('#club');
+        club.setAttribute('gps-entity-place', `latitude: ${randomLatitude}; longitude: ${randomLongitude}`);
+
+        console.log(`Objeto generado en: Latitude: ${randomLatitude}, Longitude: ${randomLongitude}`);
+    }, (error) => {
+        console.error('Error obteniendo la posición:', error);
+    });
+} else {
+    console.error('Geolocalización no está disponible en este navegador.');
+}
+  
+  
+  //setAttribute('gps-entity-place', 'longitude:' + (prize.coords.longitude + randomlongitude) + '; latitude: ' + (prize.coords.latitude + randomLatitude) + ';');
+});
+
+    </script>
   </body>
 </html>
         

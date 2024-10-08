@@ -41,7 +41,9 @@ AFRAME.registerComponent('gps_at_position_start',{
 	}
 });
 
-function createModel3D(prize) {
+function createModel3D() {
+console.log("inicia la carga");
+
   let model = document.createElement('a-entity');            
   var randomLatitude = randomNumber(-0.0001, 0.0001);
   var randomlongitude = randomNumber(-0.0001, 0.0001);

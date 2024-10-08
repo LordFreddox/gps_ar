@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        var looper;
+        var degrees = 0;
+        function rotateAnimation(el,speed){
+            var elem = document.getElementById(el);
+            if(navigator.userAgent.match("Chrome")){
+                elem.style.WebkitTransform = "rotate("+degrees+"deg)";
+            } else if(navigator.userAgent.match("Firefox")){
+                elem.style.MozTransform = "rotate("+degrees+"deg)";
+            } else if(navigator.userAgent.match("MSIE")){
+                elem.style.msTransform = "rotate("+degrees+"deg)";
+            } else if(navigator.userAgent.match("Opera")){
+                elem.style.OTransform = "rotate("+degrees+"deg)";
+            } else {
+                elem.style.transform = "rotate("+degrees+"deg)";
+            }
+            looper = setTimeout('rotateAnimation(\''+el+'\','+speed+')',speed);
+            degrees++;
+            if(degrees > 359){
+                degrees = 1;
+            }
+            }
+    </script>
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Objeto AR</title>
+    <script src='https://aframe.io/releases/0.9.2/aframe.min.js'></script>
+    <script src="scripts/aframe-ar.min.js"></script>
+    <script src="scripts/aframe-extras.loaders.min.js"></script>
+    <script src="scripts/http-service.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/LoaderGPSAtPosition.js"></script>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/loader.css">
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene gps_at_position_start cursor='rayOrigin: mouse; fuse: true; fuseTimeout: 0;' vr-mode-ui="enabled: false" embedded arjs='debugUIEnabled: false;' renderer="logarithmicDepthBuffer: true;">
+        <a-camera gps-camera rotation-reader camera="far: 10000"></a-camera>
+	</a-scene>
+    <div class="contenedor">
+        <div style="position:absolute;left: 3%;top: 3%;color: #00a4e3;">Estás en:</div>
+        <a href="https://www.bwcolombia.co/" class="back" onclick="window.close()">
+            <img src="recursos/ico_ovalo_simple.png" class='ojo'/>
+            <img src="recursos/ico_atras.png" class="heaven"/>
+        </a>
+
+        <!-- 
+        <div style="position: absolute;" class="centrar">
+            <img id="img1" src="recursos/ico_border_segment.png" class='ojo_centro'/> 
+            <script>rotateAnimation("img1",30);</script>                    
+            <img src="recursos/ico_border_segment_blanco.png" class="heaven_centro"/>
+        </div>
+        --> 
+        
+        <div class="gift">
+            <img src="recursos/ico_oval_dashed.png" class='ojo'/>
+            <img src="recursos/icon_award.png" class="heaven_gift"/>
+        </div>
+    </div>
+
+    <!-- LOADER -->
+    <div id="loader" class="container-loader">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+
+    <!-- MESSAGE WIN -->
+    <div id="message-win" class="container-message">
+        <button onclick="hiddenMessageWin()" class="close-message-win" >CERRAR</button>
+        <img src="images/ganaste_premio.png" alt="" class="win-product-image">
+    </div>
+
+</body>
