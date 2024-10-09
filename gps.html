@@ -8,7 +8,8 @@
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
     <script src="https://unpkg.com/aframe-gps-camera@latest/dist/aframe-gps-camera.min.js"></script>
-
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/loader.css">
   </head>
 
   <body>
@@ -17,7 +18,7 @@
         return Math.random() * (max - min) + min;
     }
     </script>
-    <a-scene>
+    <a-scene  vr-mode="enabled: false">
     <a-assets>
       <a-asset-item id="club" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/ClubColombia.glb"></a-asset-item>
       <a-asset-item id="magne" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/magnemite.glb"></a-asset-item>
@@ -96,6 +97,40 @@ window.addEventListener('load', () => {
 });
 
     </script>
+
+
+    <div class="contenedor">
+      <div style="position:absolute;left: 3%;top: 3%;color: #00a4e3;">Estás en:</div>
+      <a href="https://www.bwcolombia.co/" class="back" onclick="window.close()">
+          <img src="recursos/ico_ovalo_simple.png" class='ojo'/>
+          <img src="recursos/ico_atras.png" class="heaven"/>
+      </a>
+
+
+      <div style="position: absolute;" class="centrar">
+          <img id="img1" src="recursos/ico_border_segment.png" class='ojo_centro'/> 
+          <script>rotateAnimation("img1",30);</script>                    
+          <img src="recursos/ico_border_segment_blanco.png" class="heaven_centro"/>
+      </div>
+
+      
+      <div class="gift">
+          <img src="recursos/ico_oval_dashed.png" class='ojo'/>
+          <img src="recursos/icon_award.png" class="heaven_gift"/>
+      </div>
+  </div>
+
+  <!-- LOADER -->
+  <div id="loader" class="container-loader">
+      <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+
+  <!-- MESSAGE WIN -->
+  <div id="message-win" class="container-message">
+      <button onclick="hiddenMessageWin()" class="close-message-win" >CERRAR</button>
+      <img src="images/ganaste_premio.png" alt="" class="win-product-image">
+  </div>
+
   </body>
 </html>
         
