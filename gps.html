@@ -97,14 +97,39 @@ window.addEventListener('load', () => {
   
   //setAttribute('gps-entity-place', 'longitude:' + (prize.coords.longitude + randomlongitude) + '; latitude: ' + (prize.coords.latitude + randomLatitude) + ';');
 });
-const box = document.querySelector('#entity1');
+window.addEventListener('click', function (event) {
+  // Obtener el canvas de la escena
+  const sceneEl = document.querySelector('a-scene');
+  const camera = sceneEl.camera;  // Cámara de A-Frame
+  const mouse = new THREE.Vector2();
 
-box.addEventListener('click', function () {
-  console.log('Interacted with box!');
-  this.setAttribute('material', 'color', '#FF0000');
-  // Aquí puedes agregar la lógica cuando el objeto se toca o selecciona.
+  // Convertir las coordenadas del clic a NDC (Normalized Device Coordinates)
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  // Crear un rayo desde la cámara hacia la dirección del clic
+  const raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(mouse, camera);
+
+  // Obtener todas las entidades interactuables (con la clase 'interactable')
+  const interactables = Array.from(document.querySelectorAll('.interactable')).map(entity => entity.object3D);
+
+  // Interseccionar el rayo con los objetos en la escena
+  const intersects = raycaster.intersectObjects(interactables);
+
+  // Si hay alguna intersección
+  if (intersects.length > 0) {
+    const intersectedObject = intersects[0].object;  // Primer objeto intersectado
+
+    // Buscar cuál entidad corresponde a ese objeto intersectado
+    interactables.forEach(entity => {
+      if (entity === intersectedObject) {
+        console.log(`Interacted with entity: ${entity.el.id}`);
+        entity.el.setAttribute('visible', false);  // Ocultar el objeto
+      }
+    });
+  }
 });
-
     </script>
 
 
