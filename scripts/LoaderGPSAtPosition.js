@@ -8,7 +8,7 @@ AFRAME.registerComponent('gps_at_position_start',{
     navigator.geolocation.getCurrentPosition(function (position) {
       let scene = document.querySelector('a-scene');
 
-      /*getPrizes()
+      getPrizes()
         .then(prizes => {
 
           hiddenLoader()
@@ -26,7 +26,7 @@ AFRAME.registerComponent('gps_at_position_start',{
         .catch(error => {
           alert('Error al cargar los premios.')
           hiddenLoader()
-        })*/
+        })
       },
       (err) => {
         hiddenLoader()
