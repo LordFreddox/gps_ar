@@ -112,8 +112,8 @@ window.addEventListener('click', function (event) {
   raycaster.setFromCamera(mouse, camera);
 
   // Obtener todas las entidades interactuables (con la clase 'interactable')
-  const interactables = Array.from(document.querySelectorAll('.interactable')).map(entity => entity.object3D);
-
+  //const interactables = Array.from(document.querySelectorAll('.interactable')).map(entity => entity.object3D);
+  const interactables = document.querySelector('#entity1');
   // Interseccionar el rayo con los objetos en la escena
   const intersects = raycaster.intersectObjects(interactables);
 
