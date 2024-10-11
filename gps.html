@@ -97,39 +97,35 @@ window.addEventListener('load', () => {
   
   //setAttribute('gps-entity-place', 'longitude:' + (prize.coords.longitude + randomlongitude) + '; latitude: ' + (prize.coords.latitude + randomLatitude) + ';');
 });
-window.addEventListener('click', function (event) {
-  // Obtener el canvas de la escena
-  const sceneEl = document.querySelector('a-scene');
-  const camera = sceneEl.camera;  // Cámara de A-Frame
-  const mouse = new THREE.Vector2();
+const box = document.querySelector('#entity1');
 
-  // Convertir las coordenadas del clic a NDC (Normalized Device Coordinates)
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  // Escuchar el evento de clic en la pantalla
+  window.addEventListener('click', function (event) {
+    // Obtener el canvas de la escena
+    const sceneEl = document.querySelector('a-scene');
+    const camera = sceneEl.camera;  // Cámara de A-Frame
+    const mouse = new THREE.Vector2();
 
-  // Crear un rayo desde la cámara hacia la dirección del clic
-  const raycaster = new THREE.Raycaster();
-  raycaster.setFromCamera(mouse, camera);
+    // Convertir las coordenadas del clic a NDC (Normalized Device Coordinates)
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-  // Obtener todas las entidades interactuables (con la clase 'interactable')
-  //const interactables = Array.from(document.querySelectorAll('.interactable')).map(entity => entity.object3D);
-  const interactables = document.querySelector('#entity1');
-  // Interseccionar el rayo con los objetos en la escena
-  const intersects = raycaster.intersectObjects(interactables);
+    // Crear un rayo desde la cámara hacia la dirección del clic
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, camera);
 
-  // Si hay alguna intersección
-  if (intersects.length > 0) {
-    const intersectedObject = intersects[0].object;  // Primer objeto intersectado
+    // Obtener el objeto 3D de la entidad interactuable
+    const interactableObject = box.object3D;
 
-    // Buscar cuál entidad corresponde a ese objeto intersectado
-    interactables.forEach(entity => {
-      if (entity === intersectedObject) {
-        console.log(`Interacted with entity: ${entity.el.id}`);
-        entity.el.setAttribute('visible', false);  // Ocultar el objeto
-      }
-    });
-  }
-});
+    // Interseccionar el rayo con el objeto interactuable
+    const intersects = raycaster.intersectObject(interactableObject);
+
+    // Si el rayo intersecta el objeto
+    if (intersects.length > 0) {
+      console.log('Interacted with box!');
+      box.setAttribute('material', 'color', '#FF0000');  // Cambiar color del objeto
+    }
+  });
     </script>
 
 
