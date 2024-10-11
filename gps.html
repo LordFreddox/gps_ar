@@ -27,9 +27,9 @@
       <a-asset-item id="balon" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/models/balonAmericano.glb"></a-asset-item>
     </a-assets>
     
-    <a-entity gltf-model="#club"  
+    <a-entity class="interactable" gltf-model="#club"  
     look-at="[gps-camera]"
-    scale="1 1 1"></a-entity>
+    scale="1 1 1" id="cerveza"></a-entity>
 
     
 
@@ -60,7 +60,9 @@
         scale="10 10 10"
         gps-entity-place="latitude: 4.604329312463513; longitude: -74.2178109716741;"
       ></a-text>
-      <a-camera gps-camera rotation-reader far="200"> </a-camera>
+      <a-camera gps-camera rotation-reader far="200"> 
+        <a-cursor fuse="true" raycaster="objects: .interactable"></a-cursor>
+      </a-camera>
     </a-scene>
     <script>
       document.querySelector("[gps-camera]").addEventListener("gps-camera-update-position", (e) => {
@@ -94,6 +96,12 @@ window.addEventListener('load', () => {
   
   
   //setAttribute('gps-entity-place', 'longitude:' + (prize.coords.longitude + randomlongitude) + '; latitude: ' + (prize.coords.latitude + randomLatitude) + ';');
+});
+const box = document.querySelector('#cerveza');
+
+box.addEventListener('click', function () {
+  console.log('Interacted with box!');
+  // Aquí puedes agregar la lógica cuando el objeto se toca o selecciona.
 });
 
     </script>
