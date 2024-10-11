@@ -97,10 +97,11 @@ window.addEventListener('load', () => {
   
   //setAttribute('gps-entity-place', 'longitude:' + (prize.coords.longitude + randomlongitude) + '; latitude: ' + (prize.coords.latitude + randomLatitude) + ';');
 });
-const box = document.querySelector('#cerveza');
+const box = document.querySelector('#entity1');
 
 box.addEventListener('click', function () {
   console.log('Interacted with box!');
+  this.setAttribute('material', 'color', '#FF0000');
   // Aquí puedes agregar la lógica cuando el objeto se toca o selecciona.
 });
 
