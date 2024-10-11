@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>GeoAR.js demo</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <script src="https://unpkg.com/aframe-gps-camera@latest/dist/aframe-gps-camera.min.js"></script>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/loader.css">
+  </head>
+
+  <body>
+    <script>
+      function randomNumber(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    </script>
+    <a-scene  vr-mode="enabled: false">
+    <a-assets>
+      <a-asset-item id="club" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/ClubColombia.glb"></a-asset-item>
+      <a-asset-item id="magne" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/magnemite.glb"></a-asset-item>
+      <a-asset-item id="pizza" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/pizza.glb"></a-asset-item>
+      <a-asset-item id="plato" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/buffalo-ar/models/platoComida.glb"></a-asset-item>
+      <a-asset-item id="balon" src="https://sasiteit.blob.core.windows.net/container-unity/UnityBundles/webgl/FredARWeb/models/balonAmericano.glb"></a-asset-item>
+    </a-assets>
+    
+    <a-entity class="interactable" gltf-model="#club"  
+    look-at="[gps-camera]"
+    scale="1 1 1" id="cerveza"></a-entity>
+
+    
+
+    <!--
+    <a-entity gltf-model="#magne"  
+    look-at="[gps-camera]"
+    scale="1 1 1"></a-entity>
+    <a-entity gltf-model="#pizza"  
+    look-at="[gps-camera]"
+    scale="10 10 10"
+    gps-entity-place="latitude: 4.610198106757793; longitude: -74.22181377004273;"></a-entity>
+    <a-entity gltf-model="#plato"  
+    look-at="[gps-camera]"
+    scale="10 10 10"
+    gps-entity-place="latitude: 4.609299531887598; longitude: -74.22163970200745;"
+    maxDistance="10"></a-entity>
+
+
+    <a-entity gltf-model="#balon"  
+    look-at="[gps-camera]"
+    scale="10 10 10"
+    gps-entity-place="latitude: 4.587147838437966; longitude: -74.20594719724042;"
+    maxDistance="100"></a-entity>!-->
+    <a-entity id="entity1" class="interactable" geometry="primitive: box" material="color: #4CC3D9" position="-1 1 -3"></a-entity>
+      <a-text
+        value="This content will always face you."
+        look-at="[gps-camera]"
+        scale="10 10 10"
+        gps-entity-place="latitude: 4.604329312463513; longitude: -74.2178109716741;"
+      ></a-text>
+      <a-camera gps-camera rotation-reader far="200"> 
+        <a-cursor  fuse="false" raycaster="objects: .interactable"></a-cursor>
+      </a-camera>
+    </a-scene>
+    <script>
+      document.querySelector("[gps-camera]").addEventListener("gps-camera-update-position", (e) => {
+        console.log("Position updated:", e.detail.position);
+      });
+      function randomNumber(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    
+window.addEventListener('load', () => {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition((position) => {
+        const userLatitude = position.coords.latitude;
+        const userLongitude = position.coords.longitude;
+
+        // Genera una posición aleatoria alrededor del usuario
+        const randomLatitude = userLatitude + randomNumber(-0.001, 0.001); // +- 0.001 grados (~111m)
+        const randomLongitude = userLongitude + randomNumber(-0.001, 0.001); // +- 0.001 grados (~111m)
+
+        // Seleccionar el objeto y asignar la nueva posición aleatoria
+        const club = document.querySelector('#club');
+        club.setAttribute('gps-entity-place', `latitude: ${randomLatitude}; longitude: ${randomLongitude}`);
+
+        console.log(`Objeto generado en: Latitude: ${randomLatitude}, Longitude: ${randomLongitude}`);
+    }, (error) => {
+        console.error('Error obteniendo la posición:', error);
+    });
+} else {
+    console.error('Geolocalización no está disponible en este navegador.');
+}
+  
+  
+  //setAttribute('gps-entity-place', 'longitude:' + (prize.coords.longitude + randomlongitude) + '; latitude: ' + (prize.coords.latitude + randomLatitude) + ';');
+});
+const box = document.querySelector('#entity1');
+
+box.addEventListener('click', function () {
+  console.log('Interacted with box!');
+  this.setAttribute('material', 'color', '#FF0000');
+  // Aquí puedes agregar la lógica cuando el objeto se toca o selecciona.
+});
+
+    </script>
+
+
+    <div class="contenedor">
+      <div style="position:absolute;left: 3%;top: 3%;color: #00a4e3;">Estás en:</div>
+      <a href="https://www.bwcolombia.co/" class="back" onclick="window.close()">
+          <img src="recursos/ico_ovalo_simple.png" class='ojo'/>
+          <img src="recursos/ico_atras.png" class="heaven"/>
+      </a>
+
+
+      <div style="position: absolute;" class="centrar">
+          <img id="img1" src="recursos/ico_border_segment.png" class='ojo_centro'/> 
+          <script>rotateAnimation("img1",30);</script>                    
+          <img src="recursos/ico_border_segment_blanco.png" class="heaven_centro"/>
+      </div>
+
+      
+      <div class="gift">
+          <img src="recursos/ico_oval_dashed.png" class='ojo'/>
+          <img src="recursos/icon_award.png" class="heaven_gift"/>
+      </div>
+  </div>
+
+  <!-- LOADER -->
+  <div id="loader" class="container-loader">
+      <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+
+  <!-- MESSAGE WIN -->
+  <div id="message-win" class="container-message">
+      <button onclick="hiddenMessageWin()" class="close-message-win" >CERRAR</button>
+      <img src="images/ganaste_premio.png" alt="" class="win-product-image">
+  </div>
+
+  </body>
+</html>
+        
+      
