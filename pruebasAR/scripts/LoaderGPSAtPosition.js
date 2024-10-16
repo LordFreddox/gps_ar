@@ -1,3 +1,5 @@
+const { header } = require("server/reply");
+
 var urlParameters = parseUrlParameters(window.location.href);
 const product = urlParams.get('BigSurfaceId')
 console.log(product);
@@ -26,10 +28,10 @@ function FetchAPI() {
   //headers.append('company_id', '586-brand');
   var bigSurface = String(getUrlParameter("BigSurfaceId"));
   //headers.append('companyId', `${urlParameters['BigSurfaceId'].split('-')[0]}`);
+  headers.append('cli','PUnity');//cliente, nunca cambia
+  headers.append('dataListPrizesArAround','true');
   headers.append('companyId', bigSurface[0]);
-  headers.append('uid', '52692');
-  console.log("parametro de la url: "+bigSurface[0]);
-  //headers.append('api-key', '$2b$10$8sh4oaJu43jfoye8AMrQDOBLIo3/BJAYq.gH1BSWbJnCMnsGWnFS6');
+  headers.append('uid', '52692');//usuario, no cambia
 
   fetch(apiUrl, { method: 'GET', headers: headers })
       .then(response => response.json())
@@ -81,20 +83,20 @@ function FetchAPI() {
 function ReceivedDataFromWS(data) {
   const threads = data.data;
   const numObjects = threads.list_prizes_ar.length; // Set numObjects based on the API response
-  const fontLoader = new FontLoader();
-  fontLoader.load('fonts/Syne_Regular.json', function (font) { // Adjust the font path
+  /*const fontLoader = new FontLoader();
+  fontLoader.load('fonts/Syne_Regular.json', function (font) { // Adjust the font path*/
       for (let i = 0; i < numObjects; i++) {
         console.log(i);
-          loader.load(`./resources/thread${i + 1}.glb`, function (gltf) {
+          loader.load(threads.list_prizes_ar[i].url3d, function (gltf) {
               gltf.scene.scale.set(1,1,1);
               gltf.scene.userData.isTouchable = true;
-              gltf.scene.userData.thread = threads[i];
+              gltf.scene.userData.thread = threads.list_prizes_ar[i];//enviar datos del objeto ar actual (al interactuar acceder a los datos  del objeto)
               scene.add(gltf.scene);
               const { x, y } = getRandomPosition();
-              gltf.scene.position.set(x, y, Math.floor(Math.random() * -10) - 6);
+              gltf.scene.position.set(x, y, Math.floor(Math.random() * -10) - 6);//math.floor variacion en altura (investigar)
               //gltf.scene.lookAt(camera.position);
 
-              if (threads[i].name.includes(' ')) {
+              /*if (threads[i].name.includes(' ')) {
                   threads[i].name = threads[i].name.replace(' ', '\n');
               }
               const textGeometry = new TextGeometry(threads[i].name, {
@@ -111,7 +113,7 @@ function ReceivedDataFromWS(data) {
               textMesh.position.set(-0.8, 0.15, 0.3); // Position the text relative to the object
 
               // Add the text mesh as a child of the object
-              gltf.scene.add(textMesh);
+              gltf.scene.add(textMesh);*/
           }, undefined, function (error) {
               console.error(error);
           });
@@ -119,9 +121,9 @@ function ReceivedDataFromWS(data) {
 
       //finished setting up threads
       //updateAndSendMessage('SceneReady', "{'key': 'value', 'key2': 'value2'}");
-  });
+  //});
 }
-
+/*
 function createModel3D() {
 console.log("inicia la carga");
 
@@ -173,4 +175,4 @@ console.log("inicia la carga");
   };
   model.addEventListener('click', clickListener);
   return model
-}
+}*/
