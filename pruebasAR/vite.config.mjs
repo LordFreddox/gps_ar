@@ -2,10 +2,16 @@ import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
+  base: '', // Set the base path to an empty string
   build: {
     rollupOptions: {
-      input: 'gps.html'
-    }
+      input: 'gps.html',
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+      },
+    },
   },
   plugins: [
     viteStaticCopy({
