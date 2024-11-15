@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="42" height="42" viewBox="0 0 42 42">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_3" data-name="Rectángulo 3" width="42" height="42" transform="translate(0 0)" fill="#e4e4e4"/>
+    </clipPath>
+  </defs>
+  <g id="Grupo_17" data-name="Grupo 17" transform="translate(-47 -62)">
+    <g id="Grupo_16" data-name="Grupo 16" transform="translate(47 62)">
+      <g id="Grupo_6" data-name="Grupo 6" transform="translate(0 0)" clip-path="url(#clip-path)">
+        <path id="Trazado_6" data-name="Trazado 6" d="M20.811,41.622A20.811,20.811,0,1,1,41.622,20.811,20.835,20.835,0,0,1,20.811,41.622m0-38.893A18.082,18.082,0,1,0,38.893,20.811,18.1,18.1,0,0,0,20.811,2.729" transform="translate(0 0)" fill="#e4e4e4"/>
+      </g>
+    </g>
+    <line id="Línea_3" data-name="Línea 3" y1="8.188" x2="8.188" transform="translate(62.353 74.623)" fill="none" stroke="#e4e4e4" stroke-linecap="round" stroke-width="4"/>
+    <line id="Línea_4" data-name="Línea 4" x1="8.188" y1="8.188" transform="translate(62.353 82.811)" fill="none" stroke="#e4e4e4" stroke-linecap="round" stroke-width="4"/>
+  </g>
+</svg>

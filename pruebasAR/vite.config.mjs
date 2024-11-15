@@ -13,6 +13,12 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    // Serve static files from the 'src' directory
+    fs: {
+      strict: false
+    }
+  },
   plugins: [
     viteStaticCopy({
       targets: [
@@ -26,6 +32,10 @@ export default defineConfig({
         },
         {
           src: 'src/ar-threex-location-only.js',
+          dest: 'src'
+        },
+        {
+          src: 'src/response.json',
           dest: 'src'
         }
       ]

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Profile and Rewards</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <div class="PrizeList" style="background: #f0f0f0;">
+        <div class="header">
+          <input id="btnReturnToExplorer" type="image" src="/img/back_button.svg" alt="back_button" style="position: absolute; top: 50px; left: 30px; scale: 1.2;">
+          <div>PERFIL</div>
+          <img id="logoGSRewardScreen" src="/img/cafam.png" alt="Logo">
+        </div>
+        <div class="points">
+          <img src="/img/star_icon.svg" alt="star" style="scale: 1.3;">
+          <div id="YourPoints">Tus puntos</div>
+          <div id="TotalPointsFromAllEvents">0</div>
+        </div>
+        <div class="rewards">
+          <h2>Tus premios</h2>
+        </div>
+        <div class="rewar_list">
+        </div>
+  
+      </div>
+
+    <script>
+        function addRewardItem(iconSrc, title, description, date) {
+            const rewardItem = document.createElement('div');
+            rewardItem.className = 'reward-item';
+
+            const rewardIcon = document.createElement('img');
+            rewardIcon.className = 'reward-icon';
+            rewardIcon.src = iconSrc;
+            rewardIcon.alt = 'trophy';
+            rewardItem.appendChild(rewardIcon);
+
+            const parentDescription = document.createElement('div');
+            parentDescription.className = 'parent-description';
+            rewardItem.appendChild(parentDescription);
+
+            const rewardTitle = document.createElement('div');
+            rewardTitle.className = 'reward-title';
+            rewardTitle.textContent = title;
+            parentDescription.appendChild(rewardTitle);
+
+            const rewardDescription = document.createElement('div');
+            rewardDescription.className = 'reward-description';
+            rewardDescription.textContent = description;
+            parentDescription.appendChild(rewardDescription);
+
+            const dateContainer = document.createElement('div');
+            dateContainer.style.flex = '1 1 20%';
+            rewardItem.appendChild(dateContainer);
+
+            const dateTitle = document.createElement('div');
+            dateTitle.className = 'date-title';
+            dateTitle.textContent = 'Capturado el día';
+            dateContainer.appendChild(dateTitle);
+
+            const dateCapture = document.createElement('div');
+            dateCapture.className = 'date-capture';
+            if(date != null){
+                const datestamp = new Date(parseInt(date) * 1000);
+                const day = ('0' + datestamp.getDate()).slice(-2);
+                const month = ('0' + (datestamp.getMonth() + 1)).slice(-2);
+                const year = datestamp.getFullYear();
+                dateCapture.textContent = `${day}/${month}/${year}`;
+            }
+            else{
+                dateCapture.textContent = `no hay fecha`;
+            }
+            dateContainer.appendChild(dateCapture);
+
+            const rewardList = document.querySelector('.rewar_list');
+            rewardList.appendChild(rewardItem);
+        }
+
+        for (let i = 1; i <= 10; i++) {
+            addRewardItem('/img/icon_trophy.svg', `¡Ganaste ${i}!`, `Boleta para El Joker ${i}.`, `1728485344`);
+        }
+    </script>
+</body>
+</html>

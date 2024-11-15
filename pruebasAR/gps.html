@@ -3,48 +3,279 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no" />
     <title>GeoAR.js demo</title>
     <script src="src/three.min.js"></script>
     <script src="src/GLTFLoader.min.js"></script>
     <script src="src/ar-threex-location-only.js"></script>
-    <!--link rel="stylesheet" href="CSS/style.css">
-    <link rel="stylesheet" href="CSS/loader.css"-->
+    <script type="module" src="src/DeviceOrientaion.jsx"></script>
+    <!--script src="https://cdn.jsdelivr.net/gh/c-kick/mobileConsole/hnl.mobileconsole.min.js"></script-->
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/loader.css">
   </head>
 
   <body>
-  <canvas id='canvas1' style='background-color: black; position:absolute; height: 100%; width: 100%;'></canvas>
-  <!--div class="contenedor">
-      <div style="position:absolute;left: 3%;top: 3%;color: #00a4e3;">Estás en:</div>
-      <a href="https://www.bwcolombia.co/" class="back" onclick="window.close()">
-          <img src="recursos/ico_ovalo_simple.png" class='ojo'/>
-          <img src="recursos/ico_atras.png" class="heaven"/>
-      </a>
+    <canvas id="Canvas"></canvas>
 
-
-      <div style="position: absolute;" class="centrar">
-          <img id="img1" src="recursos/ico_border_segment.png" class='ojo_centro'/> 
-          <script>
-          //rotateAnimation("img1",30);
-          </script>                    
-          <img src="recursos/ico_border_segment_blanco.png" class="heaven_centro"/>
+    <div class="FinalScore MainSettings unselectable" style="visibility: hidden;"> 
+      <div class="Centered" style="  
+        width: 70vw;
+        height: 80vh;
+        background-color: rgba(0, 6, 23, 0.27);"> 
+        <div style="
+          color: rgb(4, 111, 232);
+          position: relative;
+          top: 12vh;
+          text-align: center;
+          font-size: 4.5vw;">
+            ¡Haz ganado!</div>
+        <div class="FlexParentDescriptionFinalScore">
+            <div class="ItemFinalScoreList">
+            <div class="ParentContainerScore">
+              <div id="FinalPrizeCaptureAmountCurrentSession" class="Centered TextScoreFinalScore">
+                0
+              </div>
+            </div>
+            <div class="Text_CONSTFinalScore">PREMIOS</div>
+            </div>
+            <div class="ItemFinalScoreList">
+            <div class="ParentContainerScore">
+              <div id="FinalScorePoints" class="Centered TextScoreFinalScore">
+                0
+              </div>
+            </div>
+            <div class="Text_CONSTFinalScore">PUNTOS</div>
+            </div>
+        </div>     
+        <div class="CONST_keepPlaying">
+            Sigue jugando con Zyon City App
+        </div>
+        <input id="BtnExitFinalScore" class="BlueButtonBotton" type="button" alt="back_button" value="Salir">
       </div>
+    </div>
 
-      <div class="gift">
-          <img src="recursos/ico_oval_dashed.png" class='ojo'/>
-          <img src="recursos/icon_award.png" class="heaven_gift"/>
+    <div class="PrizeCaptureResume MainSettings unselectable" style="visibility: hidden;"> 
+      <div style="
+    color: white;
+    position: relative;
+    top: 15%;
+    text-align: center;
+    font-size: 4vw;">
+        ¡GANASTE!</div>
+      <div id="alpha_background"> 
+      <div id="title_prizeCaptured" style="
+      position: relative;
+      text-align: center;
+      margin: 5%;
+      top: 10vh;
+      font-size: 2em;
+      color: white">
+      Boleta de Cine</div>
+      <div id="title_captured_prizeCaptured" style="
+      position: relative;
+      text-align: center;
+      font-size: 1.25em;
+      margin: 5%;
+      top: 17vh;
+      color: white">
+        Boleta para el Joker 2</div>
       </div>
-  </div-->
-  <!-- LOADER -->
-  <!--div id="loader" class="container-loader">
-      <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-  </div-->
-  <!-- MESSAGE WIN -->
-  <!--div id="message-win" class="container-message">
-      <button onclick="hiddenMessageWin()" class="close-message-win" >CERRAR</button>
-      <img src="images/ganaste_premio.png" alt="" class="win-product-image">
-  </div-->
+      <input id="btnAceptPrize" class="aceptPrize" type="button" alt="back_button" value="Siguiente"
+      style="
+      position: absolute;
+      border-radius: 10px;
+      background-color: rgb(4, 111, 232);
+      left: 50%;
+      top: 83%;
+      width: 25vw;
+      height: 4vh;
+      transform: translate(-50%, 0%);
+      color: white;
+      font-family: MainFont;
+          font-size: 3vw;">
+    </div>
+  
+    <div class="Explorer MainSettings unselectable" style="visibility: hidden;">
+      <div class="ExplorerLeftHeader">
+        <button id="btnPrizeList" alt="prizes">
+          <img src="/img/icono-avatar.png" alt="prizes">
+        </button>
+        <div id="CONST_EstasAqui">Estás en:</div>
+        <div id="GSName">.</div>
+      </div>
+      <div class="ExplorerRightHeader">
+        <img id="LogoGS" alt="Logo GS" src="/img/ico_atras.png">
+        <img id="BannerPoints" alt="points" src="/img/bannerPoints.png">
+        <div id="Points">+0</div>
+      </div>
+      <div class="ExplorerBottomRight">
+        <img id="compassParent" src="/img/ico_oval_dashed.png" alt="ico_oval_dashed">
+        <img id="compassChild" src="/img/ico_compass_indicator.png" alt="ico_compass_indicator">
+      </div>
+    </div>
+
+    <div class="PrizeList MainSettings" style="background: #f0f0f0; visibility: hidden;">
+      <div class="header">
+        <button id="btnReturnToExplorer" alt="back_button">
+          <img src="/img/back_button.svg" alt="back_button">
+        </button>
+        <div>PERFIL</div>
+        <img id="logoGSRewardScreen" src="/img/cafam.png" alt="Logo">
+      </div>
+      <div class="points">
+        <img src="/img/star_icon.svg" alt="star" style="scale: 1.3;">
+        <div id="YourPoints">Tus puntos</div>
+        <div id="TotalPointsFromAllEvents">+0</div>
+      </div>
+      <div class="rewards">
+        <h2>Tus premios</h2>
+      </div>
+      <div id="rewardList" class="rewar_list">
+      </div>
+    </div>
+
+    <div class="GameOver MainSettings unselectable" style="visibility: hidden;"> 
+      <div class="Centered" style="  
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 15, 54, 0.27);"> 
+        <img src="/img/gameover.png" style="
+        position: relative; 
+        top: 20vh;
+        left: 50%;
+        transform: translate(-50%, -75%);
+        width: 65vw;">  
+        <div class="CONST_keepPlaying" style="margin: 20vw; top: 15vh;">
+          Ya capturaste el numero maximo de premios por el evento.
+        </div>
+        <div class="CONST_keepPlaying" style="margin: 20vw; top: 10vh; font-size: 2em;">
+          Puntaje actual:
+        </div>
+        <div id="GameOverTotalPoints" class="CONST_keepPlaying" style="margin: 20vw; top: 5vh; font-size: 3.5em;">
+        </div>
+        <input id="ShowPrizeListGameOver" class="BlueButtonBotton" type="button" alt="back_button" value="Ver listado" style="top: 2vh">
+      </div>
+    </div>
+
+    <div class="StartingTutorials MainSettings unselectable">
+    <div class="tutorial1 MainSettings" style="visibility: visible;">
+      <div class="Welcome_headerText" style="color: white; font-size: 1em;">
+        ¡Bienvenidos a la Realidad </br> Aumentada!</div>
+      <div id="alpha_background"> 
+      <div style="
+      position: relative;
+      text-align: center;
+      font-size: 5.5vw;
+      top: 50%;
+      color: white">
+      Juega y gana
+      </div>
+      </div>
+      <div id="event_name" style="
+    position: relative;
+    font-size: 5vw;
+    text-align: center;
+    top: 50vh;
+    color: white;">
+      
+      </div>
+    </div>
+
+    <div class="tutorial2 MainSettings" style="visibility: hidden;">
+      <div class="Welcome_headerText">
+        ¡Busca!</div>
+      <div id="alpha_background"> 
+      <div style="
+      position: relative;
+      text-align: center;
+      font-size: 3.5vw;
+      padding: 10%;
+      top: 10%;
+      color: white">
+      Levanta tu cámara y busca a tu alrededor los premios que hemos puesto para ti.
+      </div>
+      <img src="/img/ilustracion_busca.png" alt="search"
+       style="
+       position: relative; 
+       top: 25vh;
+       left: 50%;
+       transform: translate(-50%, -75%);
+       width: 50vw;">
+      </div>
+    </div>
+
+    <div class="tutorial3 MainSettings" style="visibility: hidden;">
+      <div class="Welcome_headerText">
+          ¡Premio!</div>
+        <div id="alpha_background"> 
+        <div id="maxPrizeCapture" style="
+        position: relative;
+        text-align: center;
+        font-size: 3.5vw;
+        padding: 10%;
+        top: 10%;
+        color: white">
+        0 objetos en total para cazar. ¡Suerte!
+        </div>
+        <img src="/img/ilustracion_premio.png" alt="search"
+          style="
+          position: relative; 
+          top: 25vh;
+          left: 50%;
+          transform: translate(-50%, -75%);
+          max-width: 100%;">
+            <div id="maxPrizeCaptureSmall" style="
+            position: absolute;
+            text-align: center;
+            font-size: 2em;
+            left: 31vw;
+            top: 21vh;
+            color: rgb(233, 116, 33)">0</div>
+        </img>
+        </div>
+    </div>
+
+    <div class="tutorial4 MainSettings" style="visibility: hidden;">
+      <div class="Welcome_headerText">
+          ¡Gana!</div>
+        <div id="alpha_background"> 
+        <div style="
+        position: relative;
+        text-align: center;
+        font-size: 3.5vw;
+        padding: 10%;
+        top: 10%;
+        color: white">
+        Para Cazar el objeto debes TOCAR EL PREMIO CON TU DEDO.
+        </div>
+        <img src="/img/tutorial_capture_prize.png" alt="search"
+         style="
+         position: relative; 
+         top: 25vh;
+         left: 50%;
+         transform: translate(-50%, -60%);
+         max-width: 70%;">
+        </div>
+    </div>
+
+    <input id="BtnNextTutorial" type="button" alt="back_button" value="Siguiente"
+    style="
+    position: absolute;
+    border-radius: 10px;
+    background-color: rgb(4, 111, 232);
+    left: 50%;
+    bottom: 8vh;
+    width: 25vw;
+    height: 4vh;
+    transform: translate(-50%, 0%);
+    color: white;
+    font-family: MainFont;
+        font-size: 3vw;">
+    </div>
   <script type="module" src="src/LoaderGPSAtPosition.ts"></script>
+
+  <script>
+
+  </script>
   </body>
 </html>
-        
-      

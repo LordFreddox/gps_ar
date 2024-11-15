@@ -5,7 +5,7 @@ function get(url: string, uid: string, companyId: string) {
       method: "GET",
       headers: {
         "Content-type": "application/json;charset=UTF-8",
-        "cli": "Web",
+        "cli": "PUnity",
         "companyId": companyId,
         "uid": uid,
         "dataListPrizesArAround": "true"
@@ -19,7 +19,7 @@ function patch(url: string, uid: string, companyId: string, data: any) {
       body: JSON.stringify(data),
       headers: {
         "Content-type": "application/json;charset=UTF-8",
-        "cli": "Web",
+        "cli": "PUnity",
         "companyId": companyId,
         "uid": uid,
         "dataCapturePrizeArAround": "true"
@@ -42,7 +42,6 @@ function CapturePrize(uid: string, companyId: string, prize: ListPrizesAr) {
     state_id: 1,
     date_captured: prize.uuid_event
   }
-  console.log(data);
   return new Promise((result, reject) => {
     patch('/gaming/prizes/ar', uid, companyId, data)
       .then(response => response.json())
