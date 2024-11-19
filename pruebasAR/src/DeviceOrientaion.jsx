@@ -119,7 +119,6 @@ function AbsoluteDeviceOrientationControls(object) {
         // Extract the Euler angles from the quaternion and add the heading angle to the Y-axis rotation of the Euler angles
         // (If we replace only the alpha value of the quaternion without using Euler angles, the camera will rotate unexpectedly. This is because a quaternion does not represent rotation values individually but rather through a combination of rotation axes and weights.)
         const currentEuler = new THREE.Euler().setFromQuaternion(currentQuaternion, 'YXZ')
-        console.log(currentEuler.x, currentEuler.y, currentEuler.z)
         // Replace the current alpha value of the Euler angles and reset the quaternion
         currentEuler.y = THREE.MathUtils.degToRad(360 - device.webkitCompassHeading)
         currentQuaternion.setFromEuler(currentEuler)

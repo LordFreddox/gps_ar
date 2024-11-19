@@ -71,6 +71,9 @@ function Start(){
       ExplorerCanvas.style.visibility = 'visible';
       PrizeListCanvas.style.visibility = 'hidden';
       document.getElementById('rewardList').style.display = 'none';
+      interactObjects.forEach((obj) => {
+        obj.visible = true;
+      });
     });
 
     ShowPrizeListGameOver.addEventListener('click', () => {
@@ -116,12 +119,19 @@ function ChangeTutorialScreen() {
     TutorialCanvas.style.display = 'none';
     raycastEnabled = true;
     DeviceOrientation.connect();
+    interactObjects.forEach((obj) => {
+      obj.visible = true;
+    });
     return;
   }
   
   currentTutorial.style.visibility = 'hidden';
   nextTutorial.style.visibility = 'visible';
   tutorialNumber++;
+  if(navigator.geolocation){
+    arjs.startGps(); //start the gps
+    //arjs.fakeGps(-0.72, 51.05);
+  }
 }
 
 function AcceptPrize() {
@@ -135,7 +145,7 @@ function AcceptPrize() {
 arjs.on('gpsupdate', function (event) {
   if(firstSetup) {
     firstSetup = false;
-
+    console.log(event.coords.latitude, event.coords.longitude);
     GetPrizesByWS(event);
     //GetPrizesByWSFake(event);
 
@@ -252,9 +262,6 @@ function GetPrizesByWSFake(event){
   });
 }
 
-arjs.startGps(); //start the gps
-//arjs.fakeGps(-0.72, 51.05);
-
 //create a box
 /*const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -274,6 +281,7 @@ function LoadAndInstanceARObjects(coords: {latitude: number, longitude: number},
     mainglbObject.scale.set(3, 3, 3); 
     arjs.add(mainglbObject, coords.longitude + randomlongitude, coords.latitude + randomLatitude, randomNumber(-3, -3)); //add the box to the scene at the given coordinates
     interactObjects.push(mainglbObject);
+    mainglbObject.visible = false;
 }, undefined, function (error: any) {
     console.error(error);
 });
