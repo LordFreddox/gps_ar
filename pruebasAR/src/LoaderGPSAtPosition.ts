@@ -41,7 +41,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
 const renderer = new THREE.WebGLRenderer({canvas: canvas});
 const arjs = new THREEx.LocationBased(scene, camera); //this is our new scene
-const cam = new THREEx.WebcamRenderer(renderer);
+//const cam = new THREEx.WebcamRenderer(renderer);
 const light = new THREE.AmbientLight(0x404040); // soft white light
 scene.add(light);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -54,22 +54,33 @@ const isIOS = navigator.userAgent.match(/iPhone|iPad|iPod/i)
 //#endregion
 
 function Start(){
+    /*
+    ExplorerCanvas.style.display = 'none';
+    PrizeListCanvas.style.display = 'none';
+    PrizeCaptureResumeCanvas.style.display = 'none';
+    FinalScoreCanvas.style.display = 'none';
+    TutorialCanvas.style.display = 'none';
+    GameOverCanvas.style.display = 'none';
+  */
+    const FakeUserCanvas = document.getElementsByClassName('FakeUser')[0] as HTMLElement;
+    //FakeUserCanvas.style.display = 'none';
 
-    ExplorerCanvas.style.visibility = 'hidden';
-    PrizeListCanvas.style.visibility = 'hidden';
-    PrizeCaptureResumeCanvas.style.visibility = 'hidden';
-    FinalScoreCanvas.style.visibility = 'hidden';
-    TutorialCanvas.style.visibility = 'visible';
+    if(uid === '0' || companyId === '0') {
+      FakeUserCanvas.style.display = 'block';
+    }
+    else{
+      TutorialCanvas.style.display = 'block';
+    }
 
     inputPrizeList.addEventListener('click', () => {
-      ExplorerCanvas.style.visibility = 'hidden';
-      PrizeListCanvas.style.visibility = 'visible';
+      ExplorerCanvas.style.display = 'none';
+      PrizeListCanvas.style.display = 'block';
       document.getElementById('rewardList').style.display = 'flex';
     });
 
     inputReturnToExplorer.addEventListener('click', () => {
-      ExplorerCanvas.style.visibility = 'visible';
-      PrizeListCanvas.style.visibility = 'hidden';
+      ExplorerCanvas.style.display = 'block';
+      PrizeListCanvas.style.display = 'none';
       document.getElementById('rewardList').style.display = 'none';
       interactObjects.forEach((obj) => {
         obj.visible = true;
@@ -77,8 +88,8 @@ function Start(){
     });
 
     ShowPrizeListGameOver.addEventListener('click', () => {
-      GameOverCanvas.style.visibility = 'hidden';
-      PrizeListCanvas.style.visibility = 'visible';
+      GameOverCanvas.style.display = 'none';
+      PrizeListCanvas.style.display = 'block';
       document.getElementById('rewardList').style.display = 'flex';
       inputReturnToExplorer.removeEventListener('click', () => {});
       inputReturnToExplorer.style.display = 'none';
@@ -100,6 +111,11 @@ function Start(){
       window.close();
     });
 
+    document.getElementById('StartFakeUser').addEventListener('click', () => {
+      FakeUserCanvas.style.display = 'none';
+      TutorialCanvas.style.display = 'block';
+    });
+
 window.addEventListener('camera-rotation-change', (event) => {
   if(isIOS){
     spriteCompass.style.transform = `rotate(${event.detail.WebkitCompassHeading}deg)`;
@@ -114,8 +130,8 @@ function ChangeTutorialScreen() {
   const currentTutorial = document.getElementsByClassName('tutorial' + tutorialNumber)[0] as HTMLElement;
   const nextTutorial = document.getElementsByClassName('tutorial' + (tutorialNumber + 1))[0] as HTMLElement; 
   if(currentTutorial == undefined || nextTutorial == undefined) {
-    ExplorerCanvas.style.visibility = 'visible';
-    PrizeListCanvas.style.visibility = 'hidden';
+    ExplorerCanvas.style.display = 'block';
+    PrizeListCanvas.style.display = 'none';
     TutorialCanvas.style.display = 'none';
     raycastEnabled = true;
     DeviceOrientation.connect();
@@ -125,8 +141,8 @@ function ChangeTutorialScreen() {
     return;
   }
   
-  currentTutorial.style.visibility = 'hidden';
-  nextTutorial.style.visibility = 'visible';
+  currentTutorial.style.display = 'none';
+  nextTutorial.style.display = 'block';
   tutorialNumber++;
   if(navigator.geolocation){
     arjs.startGps(); //start the gps
@@ -135,8 +151,8 @@ function ChangeTutorialScreen() {
 }
 
 function AcceptPrize() {
-  PrizeCaptureResumeCanvas.style.visibility = 'hidden';
-  ExplorerCanvas.style.visibility = 'visible';
+  PrizeCaptureResumeCanvas.style.display = 'none';
+  ExplorerCanvas.style.display = 'block';
   raycastEnabled = true;
 }
 
@@ -146,8 +162,11 @@ arjs.on('gpsupdate', function (event) {
   if(firstSetup) {
     firstSetup = false;
     console.log(event.coords.latitude, event.coords.longitude);
-    GetPrizesByWS(event);
-    //GetPrizesByWSFake(event);
+    if(uid === '0' || companyId === '0') {
+      GetPrizesByWSFake(event);
+    }else{
+      GetPrizesByWS(event);
+    }
 
     //test fake object on random position around the user
     /*for (let i = 0; i < 20; i++) {
@@ -187,7 +206,7 @@ function GetPrizesByWS(event){
       totalPrizesCapture >= detailsEvent[0].prizeLimit
       ) {
       TutorialCanvas.style.display = 'none';
-      GameOverCanvas.style.visibility = 'visible';
+      GameOverCanvas.style.display = 'block';
       return;
     }
 
@@ -224,38 +243,38 @@ function GetPrizesByWSFake(event){
     prizesAndPoints = prizes.data.prizesAndPoints;
     brand = prizes.data.brand;
 
-    //get total amount of prizes capture from the same event_uuid
-    const totalPrizesCapture = prizesAndPoints.filter(prize => prize.idEvent === detailsEvent[0].idEvent).length;
-    //add rewards to the list
-    let totalPointAllEvents: number = 0;
-    prizesAndPoints.forEach(prize => {
-      addRewardItem("img/icon_trophy.svg", prize.nombrePremio, prize.mensajePremio, prize.fechaCapturadoPremio, prize.puntosPremio);
-      totalPointAllEvents += prize.puntosPremio;
-    });
-
-    document.getElementById('GameOverTotalPoints').innerText = `+${totalPointAllEvents}`;
-
-    if(
-      totalPrizesCapture >= detailsEvent[0].prizeLimit
-      ) {
-      TutorialCanvas.style.display = 'none';
-      GameOverCanvas.style.visibility = 'visible';
-      return;
-    }
-
-    document.getElementById('event_name').innerText = detailsEvent[0].descriptionEvent;
-
-    //get total points from the same event_uuid
-    totalPointsFromCurrentEvent = prizesAndPoints.filter(prize => prize.idEvent === detailsEvent[0].idEvent).reduce((acc, prize) => acc + prize.puntosPremio, 0);
-
-    document.getElementById('GSName').innerText = brand?.name || '';
-    document.getElementById('LogoGS').setAttribute('src', brand?.logo || '');
-
-    list_prizes_ar.forEach(individualPrize => {
-      LoadAndInstanceARObjects(event.coords, individualPrize);
-    });
-    document.getElementById('maxPrizeCapture').innerText = `${list_prizes_ar.length} objetos en total para cazar. ¡Suerte!`;
-    document.getElementById('maxPrizeCaptureSmall').innerText = `${list_prizes_ar.length}`;
+        //get total amount of prizes capture from the same event_uuid
+        const totalPrizesCapture = prizesAndPoints.filter(prize => prize.idEvent === detailsEvent[0].idEvent).length;
+        //add rewards to the list
+        let totalPointAllEvents: number = 0;
+        prizesAndPoints.forEach(prize => {
+          addRewardItem("img/icon_trophy.svg", prize.nombrePremio, prize.mensajePremio, prize.fechaCapturadoPremio, prize.puntosPremio);
+          totalPointAllEvents += prize.puntosPremio;
+        });
+      
+        document.getElementById('GameOverTotalPoints').innerText = `+${totalPointAllEvents}`;
+    
+        if(
+          totalPrizesCapture >= detailsEvent[0].prizeLimit
+          ) {
+          TutorialCanvas.style.display = 'none';
+          GameOverCanvas.style.display = 'block';
+          return;
+        }
+    
+        document.getElementById('event_name').innerText = detailsEvent[0].descriptionEvent;
+    
+        //get total points from the same event_uuid
+        totalPointsFromCurrentEvent = prizesAndPoints.filter(prize => prize.idEvent === detailsEvent[0].idEvent).reduce((acc, prize) => acc + prize.puntosPremio, 0);
+    
+        document.getElementById('GSName').innerText = brand?.name || '';
+        document.getElementById('LogoGS').setAttribute('src', brand?.logo || '');
+    
+        list_prizes_ar.forEach(individualPrize => {
+          LoadAndInstanceARObjects(event.coords, individualPrize);
+        });
+        document.getElementById('maxPrizeCapture').innerText = `${list_prizes_ar.length} objetos en total para cazar. ¡Suerte!`;
+        document.getElementById('maxPrizeCaptureSmall').innerText = `${list_prizes_ar.length}`;
   })
   .catch(error => {
     console.error('Error fetching local prizes:', error);
@@ -319,27 +338,31 @@ window.addEventListener('touchstart', (event) => {
 });
 
 function ObjectSelected(selectedObject: THREE.Object3D) {
-  CapturePrize(uid, companyId, selectedObject.userData.prizeData);
+  if(uid !== '0' || companyId !== '0')
+    CapturePrize(uid, companyId, selectedObject.userData.prizeData);
+
   addRewardItem("img/icon_trophy.svg", selectedObject.userData.prizeData.title,
     selectedObject.userData.prizeData.title_captured,
     (Date.now() / 1000).toString(),
     selectedObject.userData.prizeData.value_score);
-  ExplorerCanvas.style.visibility = 'hidden';
+  ExplorerCanvas.style.display = 'none';
   title_prizeCaptured.innerText = selectedObject.userData.prizeData.title;
   title_captured_prizeCaptured.innerText = selectedObject.userData.prizeData.title_captured;
   scene.remove(selectedObject);
   totalPointsFromCurrentEvent += selectedObject.userData.prizeData.value_score;
   pointText.innerText = `+${totalPointsFromCurrentEvent}`;
-  (document.getElementsByClassName('PrizeCaptureResume')[0] as HTMLElement).style.visibility = 'visible';
+  PrizeCaptureResumeCanvas.style.display = 'block';
 }
 //#endregion
 
 //#region Main Flow
 function CheckMaxPrizesCapture() {
   if(totalCapturePrizesOnCurrentSession >= detailsEvent[0].prizeLimit) {
-    FinalScoreCanvas.style.visibility = 'visible';
-    ExplorerCanvas.style.visibility = 'hidden';
-    PrizeCaptureResumeCanvas.style.visibility = 'hidden';
+    FinalScoreCanvas.style.display = 'block';
+    if(uid === '0' || companyId === '0')
+      document.getElementById('keepPlayingLogin').innerHTML = 'Si quires capturar y redimir más premios, inicia sesión en la app';
+    ExplorerCanvas.style.display = 'none';
+    PrizeCaptureResumeCanvas.style.display = 'none';
     FinalScorePoints.innerText = `+${totalPointsFromCurrentEvent}`;
     FinalPrizeCaptureAmountCurrentSession.innerText = `${totalCapturePrizesOnCurrentSession}`;
     raycastEnabled = false;
@@ -358,7 +381,7 @@ function animate() {
     camera.aspect = aspect;
     camera.updateProjectionMatrix();
   }
-  cam.update();
+  //cam.update();
   DeviceOrientation.update();
   interactObjects.forEach((obj) => {
     obj.lookAt(camera.position);

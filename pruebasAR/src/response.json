@@ -2,183 +2,96 @@
     "data": {
         "list_prizes_ar": [
             {
-                "id": 5474,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 135,
-                "title": "Testing three",
-                "title_captured": "Premio 1",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
+                "id": 0,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
                 "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 149
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 115
             },
             {
-                "id": 5476,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 142,
-                "title": "Testing three",
-                "title_captured": "Premio 2",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
-                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/trofeo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 152
-            },
-            {
-                "id": 5475,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 142,
-                "title": "Testing three",
-                "title_captured": "Premio 2",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
-                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/trofeo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 152
-            },
-            {
-                "id": 5471,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 135,
-                "title": "Testing three",
-                "title_captured": "Premio 1",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
+                "id": 1,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
                 "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 149
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 140
             },
             {
-                "id": 5484,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 142,
-                "title": "Testing three",
-                "title_captured": "Premio 2",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
-                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/trofeo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 152
+                "id": 2,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
+                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 150
             },
             {
-                "id": 5482,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 142,
-                "title": "Testing three",
-                "title_captured": "Premio 2",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
-                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/trofeo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 152
+                "id": 3,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
+                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 125
             },
             {
-                "id": 5480,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 142,
-                "title": "Testing three",
-                "title_captured": "Premio 2",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
-                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/trofeo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 152
+                "id": 4,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
+                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 100
             },
             {
-                "id": 5479,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 142,
-                "title": "Testing three",
-                "title_captured": "Premio 2",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
-                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/trofeo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 152
+                "id": 5,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
+                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 105
             },
             {
-                "id": 5477,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 142,
-                "title": "Testing three",
-                "title_captured": "Premio 2",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
-                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/trofeo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 152
+                "id": 6,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
+                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 85
             },
             {
-                "id": 5481,
-                "company_id": 876,
-                "object_class": 2,
-                "object_type": 142,
-                "title": "Testing three",
-                "title_captured": "Premio 2",
-                "state_id": 0,
-                "fake": 1,
-                "active": true,
-                "url": "https://sasiteit.blob.core.windows.net/container-unity/premios/images/55.png",
-                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/trofeo.glb",
-                "uuid_event": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "value_score": 152
+                "id": 7,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
+                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 65
+            },
+            {
+                "id": 8,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
+                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 70
+            },
+            {
+                "id": 9,
+                "title": "Premio Sorpresa",
+                "title_captured": "Felicidades, capturaste un premio",
+                "url3d": "https://sasiteit.blob.core.windows.net/container-unity/ARWeb/models/casco6Buffalo.glb",
+                "uuid_event": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "value_score": 150
             }
         ],
         "detailsEvent": [
             {
-                "descriptionEvent": "Testing three",
-                "idEvent": "ea06e8d0-f91a-43ee-9497-061d12ebad49",
-                "prizeLimit": 2
+                "descriptionEvent": "Premio Sorpresa",
+                "idEvent": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
+                "prizeLimit": 5
             }
         ],
-        "prizesAndPoints": [
-            {
-                "mensajePremio": "este es un premio de testing",
-                "idEvent": "f77c9362-75ea-42e8-a549-4f186d3a79aa",
-                "puntosPremio": 0,
-                "fechaCapturadoPremio": null,
-                "fechaRedimidoPremio": null,
-                "nombrePremio": "Lata de Cocacola"
-            },
-            {
-                "mensajePremio": "Capturaste un casco",
-                "idEvent": "b4de3597-bf7e-47d3-9831-1ae6fa59e247",
-                "puntosPremio": 20,
-                "fechaCapturadoPremio": 1728485344,
-                "fechaRedimidoPremio": null,
-                "nombrePremio": "Casco Buffalo 8"
-            }
-        ],
+        "prizesAndPoints": [],
         "brand": {
-            "name": "IBERO",
+            "name": "Evento Sorpresa",
             "color": "4a4848",
             "logo": "https://sasiteitpru.blob.core.windows.net/container1/multimedia/companies/2024-09/876_companyMobile_1726697426312.jpeg"
         }
