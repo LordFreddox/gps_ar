@@ -159,8 +159,11 @@ function StartGPS() {
   if (navigator.geolocation) {
     BtnNextTutorial.style.display = 'none';
     document.getElementById('loadingGPS').style.display = 'block';
-    arjs.startGps(); //start the gps
-    //arjs.fakeGps(-0.72, 51.05);
+    
+    if(window.location.hostname === "localhost")
+      arjs.fakeGps(-0.72, 51.05);
+    else
+      arjs.startGps();
   }
 }
 
