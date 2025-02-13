@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no" />
-    <title>GeoAR.js demo</title>
+    <title>Premios AR</title>
     <script src="src/three.min.js"></script>
     <script src="src/GLTFLoader.min.js"></script>
     <script src="src/ar-threex-location-only.js"></script>
@@ -18,11 +18,16 @@
     <canvas id="Canvas"></canvas>
 
     <div class="FakeUser MainSettings unselectable"> 
- 
-      <div class="CONST_keepPlaying" style="margin: 10vw; top: 10vh; font-size: 1.2em; text-align: center;">
-        Sumergete en nuestra experiencia AR capturando los premios que tenemos para ti. </br></br> Recuerda que tienes que iniciar sesión para poder reclamar tus premios.
+      <div class="Centered" style="  
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 15, 54, 0.27);"> 
+              <div class="CONST_keepPlaying" style="margin: 10vw; top: 10vh; font-size: 1.2em; text-align: center;">
+                Sumergete en nuestra experiencia AR capturando los premios que tenemos para ti. </br></br> Recuerda que tienes que iniciar sesión para poder reclamar tus premios.
+              </div>
+              <input id="StartFakeUser" class="BlueButtonBotton" type="button" alt="back_button" value="Empezar prueba" style="top: 44vh; width: 30vw; height: 5vh;">
       </div>
-      <input id="StartFakeUser" class="BlueButtonBotton" type="button" alt="back_button" value="Empezar prueba" style="top: 44vh; width: 30vw; height: 5vh;">
+
     </div>
 
     <div class="FinalScore MainSettings unselectable"> 
@@ -58,7 +63,7 @@
         <div id="keepPlayingLogin" class="CONST_keepPlaying">
             Sigue jugando con Zyon City App
         </div>
-        <input id="BtnExitFinalScore" class="BlueButtonBotton" type="button" alt="back_button" value="Salir">
+        <!--input id="BtnExitFinalScore" class="BlueButtonBotton" type="button" alt="back_button" value="Salir"-->
       </div>
     </div>
 
@@ -268,6 +273,7 @@
 
     <input id="BtnNextTutorial" type="button" alt="back_button" value="Siguiente"
     style="
+    display: block;
     position: absolute;
     border-radius: 10px;
     background-color: rgb(4, 111, 232);
@@ -279,6 +285,15 @@
     color: white;
     font-family: MainFont;
         font-size: 3vw;">
+    <div id="loadingGPS" style="
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: 9vh;
+    transform: translate(-50%, 0%);
+    color: white;
+    font-family: MainFont;
+        font-size: 4vw;"> Cargando... </div>  
     </div>
   <script type="module" src="src/LoaderGPSAtPosition.ts"></script>
 
