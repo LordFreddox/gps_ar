@@ -1,4 +1,11 @@
-const base_url = 'https://as-ws-siteit-test.azurewebsites.net/api'
+enum ProjectBaseURL {
+  ZYON_PRU = 'https://as-ws-siteit-test.azurewebsites.net/api',
+  ZYON = 'https://apiapp.zyon.tockall.com/api'
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const PROJECT = urlParams.get('project')?.toUpperCase() as keyof typeof ProjectBaseURL;
+const base_url = ProjectBaseURL[PROJECT];
 
 function get(url: string, userId: string, placeId: string, isAround: boolean) {
   if (isAround) {
@@ -30,6 +37,7 @@ function patch(url: string, data: any, userId: string, placeId: string, isAround
       method: "PATCH",
       body: data,
       headers: {
+        'Content-Type': 'application/json',
         "cli": "PUnity",
         "companyId": placeId,
         "uid": userId,
@@ -41,6 +49,7 @@ function patch(url: string, data: any, userId: string, placeId: string, isAround
       method: "PATCH",
       body: data,
       headers: {
+        'Content-Type': 'application/json',
         "cli": "PUnity",
         "companyId": placeId,
         "uid": userId

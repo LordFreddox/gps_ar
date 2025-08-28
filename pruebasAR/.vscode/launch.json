@@ -8,7 +8,7 @@
             "runtimeArgs": [
                 "--remote-debugging-port=9222"
             ],
-            "url": "http://localhost:3000/gps.html?placeId=876&userId=2245&isAround=true", // Provide your project's url to finish configuring
+            "url": "http://localhost:3000/gps.html?placeId=876&userId=2245&isAround=true&project=zyon_pru", // userId 2245
             "presentation": {
                 "hidden": true
             }
@@ -17,7 +17,7 @@
             "type": "vscode-edge-devtools.debug",
             "name": "Open Edge DevTools",
             "request": "attach",
-            "url": "http://localhost:3000/gps.html?placeId=876&userId=2245&isAround=true", // Provide your project's url to finish configuring
+            "url": "http://localhost:3000/gps.html?placeId=876&userId=2245&isAround=true&project=zyon_pru",
             "presentation": {
                 "hidden": true
             }

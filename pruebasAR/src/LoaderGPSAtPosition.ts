@@ -43,6 +43,7 @@ const ShowPrizeListGameOver = document.getElementById('ShowPrizeListGameOver');
 const title_prizeCaptured = document.getElementById('title_prizeCaptured');
 const title_captured_prizeCaptured = document.getElementById('title_captured_prizeCaptured');
 const FinalPrizeCaptureAmountCurrentSession = document.getElementById('FinalPrizeCaptureAmountCurrentSession');
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 //#region ThreeJS setup
 const canvas = document.getElementById('Canvas') as HTMLCanvasElement;
 const scene = new THREE.Scene();
@@ -116,11 +117,11 @@ function Start() {
     StartGPS();
   });
 
-  document.getElementById('StartFakeUser').addEventListener('click', () => {
-    FakeUserCanvas.style.display = 'none';
-    TutorialCanvas.style.display = 'block';
-    StartGPS();
-  });
+  // document.getElementById('StartFakeUser').addEventListener('click', () => {
+  //   FakeUserCanvas.style.display = 'none';
+  //   TutorialCanvas.style.display = 'block';
+  //   StartGPS();
+  // });
 
   window.addEventListener('camera-rotation-change', (event) => {
     if (isIOS) {
@@ -160,7 +161,7 @@ function StartGPS() {
     BtnNextTutorial.style.display = 'none';
     document.getElementById('loadingGPS').style.display = 'block';
     
-    if(window.location.hostname === "localhost")
+    if(isLocalhost)
       arjs.fakeGps(-0.72, 51.05);
     else
       arjs.startGps();
@@ -182,7 +183,6 @@ arjs.on('gpsupdate', function (event) {
     BtnNextTutorial.style.display = 'block';
     document.getElementById('loadingGPS').style.display = 'none';
 
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     if (isLocalhost || uid === '0' || companyId === '0') {
       GetPrizesByWSFake(event);
     } else {
